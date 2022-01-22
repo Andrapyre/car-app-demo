@@ -23,7 +23,6 @@ export const parseCarBody = (
   callback: (parsedBody: CarBodyDomain) => void
 ): void => {
   const { body } = req
-  console.log(body)
   const validateCarBodyDomain = ajv.compile(carBodyDomainSchema)
   if (validateCarBodyDomain(body)) {
     callback(body)

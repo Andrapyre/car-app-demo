@@ -14,14 +14,12 @@ app.get("/cars/:id", carIdParserMiddelware, (req, res) => {
 
 app.post("/cars", json(), (req, res) => {
   parseCarBody(req, res, (data) => {
-    console.log(data)
     res.status(201).send("Good job!")
   })
 })
 
 app.put("/cars/:id", json(), carIdParserMiddelware, (req, res) => {
   parseCarBody(req, res, (data) => {
-    console.log(data)
     res.status(201).send("Good job!")
   })
 })
