@@ -5,6 +5,14 @@ export enum TransmissionType {
   MANUAL = "manual",
 }
 
+const allTransmissionTypes = [
+  TransmissionType.AUTOMATIC,
+  TransmissionType.MANUAL,
+]
+
+export const validateTransmissionType = (input: string) =>
+  validateEnum(input, allTransmissionTypes)
+
 export enum PaintColor {
   BLUE = "blue",
   GREEN = "green",
@@ -12,12 +20,27 @@ export enum PaintColor {
   RED = "red",
 }
 
+const allPaintColorIds = [
+  PaintColor.BLUE,
+  PaintColor.GREEN,
+  PaintColor.ORANGE,
+  PaintColor.RED,
+]
+
+export const validatePaintColor = (input: string) =>
+  validateEnum(input, allPaintColorIds)
+
 export enum BrandId {
   AUDI = 1,
   BMW = 2,
   FORD = 3,
   TOYOTA = 4,
 }
+
+const allBrandIds = [BrandId.AUDI, BrandId.BMW, BrandId.FORD, BrandId.TOYOTA]
+
+export const validateBrandId = (input: number) =>
+  validateEnum(input, allBrandIds)
 
 export interface CarBodyDomain {
   brandId: BrandId
@@ -41,7 +64,7 @@ export const carBodyDomainSchema: JSONSchemaType<CarBodyDomain> = {
   properties: {
     brandId: {
       type: "number",
-      enum: [BrandId.AUDI, BrandId.BMW, BrandId.FORD, BrandId.TOYOTA],
+      enum: allBrandIds,
     },
     color: {
       type: "string",
@@ -62,4 +85,9 @@ export const carBodyDomainSchema: JSONSchemaType<CarBodyDomain> = {
   },
   required: ["brandId", "transmission"],
   additionalProperties: false,
+}
+
+const validateEnum = <G>(input: G, enumArray: G[]): boolean => {
+  if (enumArray.indexOf(input) > -1) return true
+  else return false
 }
