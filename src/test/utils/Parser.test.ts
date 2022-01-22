@@ -1,44 +1,34 @@
-import { NextFunction, Request, Response } from "express"
+import { Request, Response } from "express"
 import { parseCarBody } from "../../main/utils/Parser"
 
 describe("Parser", () => {
   describe("Car body parser", () => {
-    let mockRequest: Partial<Request>
     let mockResponse: Partial<Response>
-    const nextFunction: NextFunction = jest.fn()
+    const callback = jest.fn()
 
     beforeEach(() => {
-      mockRequest = {}
-      mockResponse = {
-        status: jest.fn(),
-        json: jest.fn(),
+      const initMockResponse = () => {
+        const res: Partial<Response> = {}
+        res.status = jest.fn().mockReturnValue(res)
+        res.json = jest.fn().mockReturnValue(res)
+        return res
       }
+
+      mockResponse = initMockResponse()
     })
 
     it("returns 400 when parsing an empty body", async () => {
-      parseCarBody(
-        mockRequest as Request,
-        mockResponse as Response,
-        nextFunction
-      )
+      const mockRequest: Partial<Request> = {}
+      parseCarBody(mockRequest as Request, mockResponse as Response, callback)
 
       expect(mockResponse.status).toBeCalledWith(400)
     })
-    // it("returns 200 when parsing a body with all required fields", async () => {
-    //   mockRequest = {
-    //     body: { brandId: 1, transmission: "automatic" },
-    //   }
-    //   parseCarBody(
-    //     mockRequest as Request,
-    //     mockResponse as Response,
-    //     nextFunction
-    //   )
-    //   expect(mockResponse.statusCode).toBe(400)
-    // })
+    it("allows application to proceed when parsing a body with all required fields", async () => {
+      const mockRequest: Partial<Request> = {
+        body: { brandId: 1, transmission: "automatic" },
+      }
+      parseCarBody(mockRequest as Request, mockResponse as Response, callback)
+      expect(callback).toBeCalled()
+    })
   })
-  //   it("parses valid input correctly", () => {
-  //     const input = "1d18fb0a-9a01-499c-a9ba-5a704c1240e6" as unknown
-  //     const expectedOutput = "1d18fb0a-9a01-499c-a9ba-5a704c1240e6"
-  //     // expect(parseCarIdInput(input)).toBe(expectedOutput)
-  //   })
 })
