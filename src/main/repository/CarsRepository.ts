@@ -24,25 +24,25 @@ export class CarsRepository {
     this.CarModel = dbClient.model<CarDb>("Car", schema)
   }
 
-  public async getCar(carId: string) {
-    await this.CarModel.findById(carId)
+  public async getCar(carId: string): Promise<CarDb | null> {
+    return await this.CarModel.findById(carId)
   }
 
-  public async getCars() {
-    await this.CarModel.find({})
+  public async getCars(): Promise<CarDb[]> {
+    return await this.CarModel.find({})
   }
 
-  public async createCar(car: CarDb) {
+  public async createCar(car: CarDb): Promise<CarDb> {
     const carModelInstance = new this.CarModel(car)
-    await carModelInstance.save()
+    return await carModelInstance.save()
   }
 
-  public async updateCar(car: CarDb) {
+  public async updateCar(car: CarDb): Promise<CarDb> {
     const carModelInstance = new this.CarModel(car)
-    await carModelInstance.update()
+    return carModelInstance.update()
   }
 
-  public async deleteCar(carId: string) {
-    await this.CarModel.deleteOne({ _id: carId })
+  public async deleteCar(carId: string): Promise<CarDb> {
+    return await this.CarModel.remove({ _id: carId })
   }
 }

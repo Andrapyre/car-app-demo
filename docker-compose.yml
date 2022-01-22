@@ -1,0 +1,7 @@
+version: "3.8"
+services:
+  mongodb-local:
+    image: "mongo:latest"
+    container_name: mongodb-local-car-app-demo
+    ports:
+      - "27017:27017"
