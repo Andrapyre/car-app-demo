@@ -1,7 +1,7 @@
 import * as uuid from "uuid"
 import { Request, Response, NextFunction } from "express"
 import Ajv from "ajv"
-import { CarBodyDomain, carBodyDomainSchema } from "../models/CarDomain"
+import { CarRequestDto, carRequestDtoSchema } from "../models/CarDto"
 
 const ajv = new Ajv({ removeAdditional: true })
 
@@ -20,13 +20,13 @@ export const carIdParserMiddelware = (
 export const parseCarBody = (
   req: Request,
   res: Response,
-  callback: (parsedBody: CarBodyDomain) => void
+  callback: (parsedBody: CarRequestDto) => void
 ): void => {
   const { body } = req
-  const validateCarBodyDomain = ajv.compile(carBodyDomainSchema)
-  if (validateCarBodyDomain(body)) {
+  const validateCarRequestDto = ajv.compile(carRequestDtoSchema)
+  if (validateCarRequestDto(body)) {
     callback(body)
   } else {
-    res.status(400).json(validateCarBodyDomain.errors)
+    res.status(400).json(validateCarRequestDto.errors)
   }
 }

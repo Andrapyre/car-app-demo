@@ -4,9 +4,9 @@
   "description": "This is a demo of an api to manage a car stock list",
   "main": "./src/main/index.ts",
   "scripts": {
-    "dev": "nodemon",
+    "dev": "nodemon src/main/index.ts",
     "test": "jest",
-    "start": "tsc && node dist/main/index.js"
+    "start": "tsc && node dist/index.js"
   },
   "repository": {
     "type": "git",

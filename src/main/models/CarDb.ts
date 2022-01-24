@@ -1,4 +1,4 @@
-import { BrandId, PaintColor, TransmissionType } from "./CarDomain"
+import { BrandId, CarResponseDto, PaintColor, TransmissionType } from "./CarDto"
 
 export interface CarDb {
   _id: string
@@ -7,4 +7,16 @@ export interface CarDb {
   hasAccident?: boolean
   seats?: number
   transmission: TransmissionType
+}
+
+export const convertCarDbToCarDto = (car: CarDb): CarResponseDto => {
+  const { _id, brandId, color, hasAccident, seats, transmission } = car
+  return {
+    carId: _id,
+    brandId,
+    color,
+    hasAccident,
+    seats,
+    transmission,
+  }
 }

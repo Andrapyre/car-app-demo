@@ -4,7 +4,11 @@ import {
   validateBrandId,
   validatePaintColor,
   validateTransmissionType,
-} from "../models/CarDomain"
+} from "../models/CarDto"
+
+interface DeleteResult {
+  deletedCount: number
+}
 
 export class CarsRepository {
   private readonly CarModel: Model<CarDb>
@@ -39,10 +43,12 @@ export class CarsRepository {
 
   public async updateCar(car: CarDb): Promise<CarDb> {
     const carModelInstance = new this.CarModel(car)
-    return carModelInstance.update()
+    return carModelInstance.updateOne()
   }
 
-  public async deleteCar(carId: string): Promise<CarDb> {
-    return await this.CarModel.remove({ _id: carId })
+  public async deleteCar(carId: string): Promise<boolean> {
+    const res: DeleteResult = await this.CarModel.remove({ _id: carId })
+    if (res.deletedCount > 0) return true
+    else return false
   }
 }

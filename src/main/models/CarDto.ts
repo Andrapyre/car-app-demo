@@ -42,7 +42,7 @@ const allBrandIds = [BrandId.AUDI, BrandId.BMW, BrandId.FORD, BrandId.TOYOTA]
 export const validateBrandId = (input: number) =>
   validateEnum(input, allBrandIds)
 
-export interface CarBodyDomain {
+export interface CarRequestDto {
   brandId: BrandId
   color?: PaintColor
   hasAccident?: boolean
@@ -50,7 +50,7 @@ export interface CarBodyDomain {
   transmission: TransmissionType
 }
 
-export interface CarResponseDomain {
+export interface CarResponseDto {
   carId: string
   brandId: BrandId
   color?: PaintColor
@@ -59,7 +59,7 @@ export interface CarResponseDomain {
   transmission: TransmissionType
 }
 
-export const carBodyDomainSchema: JSONSchemaType<CarBodyDomain> = {
+export const carRequestDtoSchema: JSONSchemaType<CarRequestDto> = {
   type: "object",
   properties: {
     brandId: {
