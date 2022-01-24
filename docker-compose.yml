@@ -1,7 +1,17 @@
 version: "3.8"
 services:
-  mongodb-local:
+  mongodb:
     image: "mongo:latest"
-    container_name: mongodb-local-car-app-demo
+    container_name: car-app-demo-mongodb
     ports:
       - "27017:27017"
+
+  application:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: car-app-demo-application
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mongodb
