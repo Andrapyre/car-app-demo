@@ -1,4 +1,7 @@
-import { BrandId, CarResponseDto, PaintColor, TransmissionType } from "./CarDto"
+import { BrandId } from "./BrandId"
+import { CarResponseDto } from "./CarDto"
+import { PaintColor } from "./PaintColor"
+import { TransmissionType } from "./TransmissionType"
 
 export interface CarDb {
   _id: string

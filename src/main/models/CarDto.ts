@@ -1,46 +1,8 @@
 import { JSONSchemaType } from "ajv"
-
-export enum TransmissionType {
-  AUTOMATIC = "automatic",
-  MANUAL = "manual",
-}
-
-const allTransmissionTypes = [
-  TransmissionType.AUTOMATIC,
-  TransmissionType.MANUAL,
-]
-
-export const validateTransmissionType = (input: string) =>
-  validateEnum(input, allTransmissionTypes)
-
-export enum PaintColor {
-  BLUE = "blue",
-  GREEN = "green",
-  ORANGE = "orange",
-  RED = "red",
-}
-
-const allPaintColorIds = [
-  PaintColor.BLUE,
-  PaintColor.GREEN,
-  PaintColor.ORANGE,
-  PaintColor.RED,
-]
-
-export const validatePaintColor = (input: string) =>
-  validateEnum(input, allPaintColorIds)
-
-export enum BrandId {
-  AUDI = 1,
-  BMW = 2,
-  FORD = 3,
-  TOYOTA = 4,
-}
-
-const allBrandIds = [BrandId.AUDI, BrandId.BMW, BrandId.FORD, BrandId.TOYOTA]
-
-export const validateBrandId = (input: number) =>
-  validateEnum(input, allBrandIds)
+import { allBrandIds, BrandId } from "./BrandId"
+import { CarDb } from "./CarDb"
+import { PaintColor } from "./PaintColor"
+import { TransmissionType } from "./TransmissionType"
 
 export interface CarRequestDto {
   brandId: BrandId
@@ -87,7 +49,16 @@ export const carRequestDtoSchema: JSONSchemaType<CarRequestDto> = {
   additionalProperties: false,
 }
 
-const validateEnum = <G>(input: G, enumArray: G[]): boolean => {
-  if (enumArray.indexOf(input) > -1) return true
-  else return false
+export const convertCarReqDtoToCarDb = (
+  carReq: CarRequestDto,
+  id: string
+): CarDb => {
+  return {
+    _id: id,
+    brandId: carReq.brandId,
+    color: carReq.color,
+    hasAccident: carReq.hasAccident,
+    seats: carReq.seats,
+    transmission: carReq.transmission,
+  }
 }

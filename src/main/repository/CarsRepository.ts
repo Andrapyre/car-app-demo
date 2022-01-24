@@ -6,9 +6,7 @@ import {
   validateTransmissionType,
 } from "../models/CarDto"
 
-interface DeleteResult {
-  deletedCount: number
-}
+import { UpdateResult, DeleteResult } from "mongodb"
 
 export class CarsRepository {
   private readonly CarModel: Model<CarDb>
@@ -42,13 +40,22 @@ export class CarsRepository {
   }
 
   public async updateCar(car: CarDb): Promise<CarDb> {
-    const carModelInstance = new this.CarModel(car)
-    return carModelInstance.updateOne()
+    const result: UpdateResult = await this.CarModel.updateOne(
+      { _id: car._id },
+      car
+    )
+    if (result.modifiedCount === 1) {
+      return Promise.resolve(car)
+    } else if (result.matchedCount === 1 && result.modifiedCount === 0) {
+      return Promise.resolve(car)
+    } else {
+      return Promise.reject()
+    }
   }
 
-  public async deleteCar(carId: string): Promise<boolean> {
-    const res: DeleteResult = await this.CarModel.remove({ _id: carId })
-    if (res.deletedCount > 0) return true
-    else return false
+  public async deleteCar(carId: string): Promise<string> {
+    const res: DeleteResult = await this.CarModel.deleteOne({ _id: carId })
+    if (res.deletedCount === 1) return Promise.resolve(carId)
+    else return Promise.reject()
   }
 }
