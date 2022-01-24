@@ -1,4 +1,4 @@
-import { validateEnum } from "../utils/utils"
+import { validateInputAgainstEnum } from "../utils/utils"
 
 export enum TransmissionType {
   AUTOMATIC = "automatic",
@@ -6,4 +6,4 @@ export enum TransmissionType {
 }
 
 export const validateTransmissionType = (input: string) =>
-  validateEnum(input, Object.values(TransmissionType))
+  validateInputAgainstEnum(input, Object.values(TransmissionType))

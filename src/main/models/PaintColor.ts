@@ -1,4 +1,4 @@
-import { validateEnum } from "../utils/utils"
+import { validateInputAgainstEnum } from "../utils/utils"
 
 export enum PaintColor {
   BLUE = "blue",
@@ -8,4 +8,4 @@ export enum PaintColor {
 }
 
 export const validatePaintColor = (input: string) =>
-  validateEnum(input, Object.values(PaintColor))
+  validateInputAgainstEnum(input, Object.values(PaintColor))

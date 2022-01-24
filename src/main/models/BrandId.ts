@@ -1,4 +1,4 @@
-import { validateEnum } from "../utils/utils"
+import { validateInputAgainstEnum } from "../utils/utils"
 
 export enum BrandId {
   AUDI = 1,
@@ -15,4 +15,4 @@ export const allBrandIds = [
 ]
 
 export const validateBrandId = (input: number) =>
-  validateEnum(input, allBrandIds)
+  validateInputAgainstEnum(input, allBrandIds)
