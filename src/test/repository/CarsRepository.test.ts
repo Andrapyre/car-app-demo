@@ -1,5 +1,5 @@
 import { CarsRepository } from "../../main/repository/CarsRepository"
-import mongoose, { Mongoose } from "mongoose"
+import mongoose from "mongoose"
 import * as uuid from "uuid"
 import { CarDb } from "../../main/models/CarDb"
 import { TransmissionType } from "../../main/models/TransmissionType"
