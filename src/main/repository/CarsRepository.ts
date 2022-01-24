@@ -37,18 +37,8 @@ export class CarsRepository {
     return await carModelInstance.save()
   }
 
-  public async updateCar(car: CarDb): Promise<CarDb> {
-    const result: UpdateResult = await this.CarModel.updateOne(
-      { _id: car._id },
-      car
-    )
-    if (result.modifiedCount === 1) {
-      return Promise.resolve(car)
-    } else if (result.matchedCount === 1 && result.modifiedCount === 0) {
-      return Promise.resolve(car)
-    } else {
-      return Promise.reject()
-    }
+  public async updateCar(car: CarDb): Promise<UpdateResult> {
+    return await this.CarModel.updateOne({ _id: car._id }, car)
   }
 
   public async deleteCar(carId: string): Promise<DeleteResult> {

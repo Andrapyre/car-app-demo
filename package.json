@@ -5,7 +5,7 @@
   "main": "./src/main/index.ts",
   "scripts": {
     "dev": "nodemon src/main/index.ts",
-    "test": "jest",
+    "test": "docker-compose down && docker-compose up -d mongodb-local && jest --verbose --coverage && docker-compose down",
     "start": "tsc && node dist/index.js"
   },
   "repository": {

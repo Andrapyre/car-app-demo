@@ -50,8 +50,10 @@ export const carController = (app: Express, carsRepository: CarsRepository) => {
       handlePromiseAsServerError(
         res,
         carsRepository.updateCar(carDb),
-        (car) => {
-          res.status(200).json(car)
+        (updateResult) => {
+          if (updateResult.matchedCount === 1) {
+            res.status(200).json(convertCarDbToCarDto(carDb))
+          } else res.status(404).send()
         }
       )
     })
