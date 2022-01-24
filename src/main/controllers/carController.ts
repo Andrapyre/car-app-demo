@@ -1,13 +1,20 @@
 import { json, Express, Response } from "express"
 import { v4 } from "uuid"
-import { CarDb, convertCarDbToCarDto } from "../models/CarDb"
+import {
+  CarDb,
+  convertCarDbToCarDto,
+  convertCarDbToCarMetadataDto,
+} from "../models/CarDb"
 import { convertCarReqDtoToCarDb } from "../models/CarDto"
 import { CarsRepository } from "../repository/CarsRepository"
 import { carIdParserMiddelware, parseCarBody } from "../utils/Parser"
 
 export const carController = (app: Express, carsRepository: CarsRepository) => {
   app.get("/cars", (req, res) => {
-    res.send("Here's a list of metadata")
+    handlePromiseAsServerError(res, carsRepository.getCars(), (dbCars) => {
+      const cars = dbCars.map(convertCarDbToCarMetadataDto)
+      res.status(200).json(cars)
+    })
   })
 
   app.get("/cars/:id", carIdParserMiddelware, async (req, res) => {

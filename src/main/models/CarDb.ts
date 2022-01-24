@@ -1,5 +1,5 @@
 import { BrandId } from "./BrandId"
-import { CarResponseDto } from "./CarDto"
+import { CarMetadataResponseDto, CarResponseDto } from "./CarDto"
 import { PaintColor } from "./PaintColor"
 import { TransmissionType } from "./TransmissionType"
 
@@ -21,5 +21,15 @@ export const convertCarDbToCarDto = (car: CarDb): CarResponseDto => {
     hasAccident,
     seats,
     transmission,
+  }
+}
+
+export const convertCarDbToCarMetadataDto = (
+  car: CarDb
+): CarMetadataResponseDto => {
+  const { _id, brandId } = car
+  return {
+    carId: _id,
+    brandId,
   }
 }
