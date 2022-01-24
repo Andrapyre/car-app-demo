@@ -62,8 +62,8 @@ export const carController = (app: Express, carsRepository: CarsRepository) => {
     handlePromiseAsServerError(
       res,
       carsRepository.deleteCar(id),
-      (isCarDeleted) => {
-        if (isCarDeleted) res.status(204).send()
+      (deleteResult) => {
+        if (deleteResult.deletedCount === 1) res.status(204).send()
         else res.status(404).send()
       }
     )

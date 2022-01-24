@@ -35,19 +35,14 @@ export const carRequestDtoSchema: JSONSchemaType<CarRequestDto> = {
     },
     color: {
       type: "string",
-      enum: [
-        PaintColor.BLUE,
-        PaintColor.GREEN,
-        PaintColor.ORANGE,
-        PaintColor.RED,
-      ],
+      enum: Object.values(PaintColor),
       nullable: true,
     },
     hasAccident: { type: "boolean", nullable: true },
     seats: { type: "number", nullable: true },
     transmission: {
       type: "string",
-      enum: [TransmissionType.AUTOMATIC, TransmissionType.MANUAL],
+      enum: Object.values(TransmissionType),
     },
   },
   required: ["brandId", "transmission"],

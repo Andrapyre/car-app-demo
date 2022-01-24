@@ -7,12 +7,5 @@ export enum PaintColor {
   RED = "red",
 }
 
-export const allPaintColorIds = [
-  PaintColor.BLUE,
-  PaintColor.GREEN,
-  PaintColor.ORANGE,
-  PaintColor.RED,
-]
-
 export const validatePaintColor = (input: string) =>
-  validateEnum(input, allPaintColorIds)
+  validateEnum(input, Object.values(PaintColor))

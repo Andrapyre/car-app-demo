@@ -5,10 +5,5 @@ export enum TransmissionType {
   MANUAL = "manual",
 }
 
-export const allTransmissionTypes = [
-  TransmissionType.AUTOMATIC,
-  TransmissionType.MANUAL,
-]
-
 export const validateTransmissionType = (input: string) =>
-  validateEnum(input, allTransmissionTypes)
+  validateEnum(input, Object.values(TransmissionType))

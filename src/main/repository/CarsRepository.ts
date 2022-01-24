@@ -51,9 +51,7 @@ export class CarsRepository {
     }
   }
 
-  public async deleteCar(carId: string): Promise<string> {
-    const res: DeleteResult = await this.CarModel.deleteOne({ _id: carId })
-    if (res.deletedCount === 1) return Promise.resolve(carId)
-    else return Promise.reject()
+  public async deleteCar(carId: string): Promise<DeleteResult> {
+    return await this.CarModel.deleteOne({ _id: carId })
   }
 }
