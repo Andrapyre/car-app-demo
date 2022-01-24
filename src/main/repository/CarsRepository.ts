@@ -1,12 +1,10 @@
 import { Model, Mongoose, Schema } from "mongoose"
 import { CarDb } from "../models/CarDb"
-import {
-  validateBrandId,
-  validatePaintColor,
-  validateTransmissionType,
-} from "../models/CarDto"
 
 import { UpdateResult, DeleteResult } from "mongodb"
+import { validateTransmissionType } from "../models/TransmissionType"
+import { validatePaintColor } from "../models/PaintColor"
+import { validateBrandId } from "../models/BrandId"
 
 export class CarsRepository {
   private readonly CarModel: Model<CarDb>

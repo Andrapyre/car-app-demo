@@ -21,6 +21,11 @@ export interface CarResponseDto {
   transmission: TransmissionType
 }
 
+export interface CarMetadataResponseDto {
+  carId: string
+  brandId: BrandId
+}
+
 export const carRequestDtoSchema: JSONSchemaType<CarRequestDto> = {
   type: "object",
   properties: {
