@@ -1,6 +1,6 @@
-import { Logger } from "ajv"
 import { json, Express, Response } from "express"
 import { v4 } from "uuid"
+import { Logger } from "winston"
 import {
   CarDb,
   convertCarDbToCarDto,
