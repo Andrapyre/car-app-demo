@@ -4,9 +4,10 @@
   "description": "This is a demo of an api to manage a car stock list",
   "main": "./src/main/index.ts",
   "scripts": {
-    "dev": "nodemon src/main/index.ts",
-    "test": "docker-compose down && docker-compose up -d mongodb-local && jest --verbose --coverage && docker-compose down",
-    "start": "tsc && node dist/index.js"
+    "dev": "docker-compose up -d mongodb && NODE_ENV=dev nodemon src/main/index.ts",
+    "build": "tsc",
+    "test": "docker-compose down && docker-compose up -d mongodb && jest --verbose --coverage && docker-compose down",
+    "start": "NODE_ENV=prod node dist/index.js"
   },
   "repository": {
     "type": "git",
