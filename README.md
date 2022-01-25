@@ -27,3 +27,7 @@ This application contains a small api to manage cars. It includes all CRUD funct
 #### 7. Paste the id into the collection variable that you created in Step #4.
 
 #### 8. You should now be able to run all of the other requests in Postman.
+
+### Running production simulation
+
+#### 1. Run the following:
