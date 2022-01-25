@@ -1,0 +1,15 @@
+{
+  "defaultSeverity": "error",
+  "extends": ["tslint:recommended"],
+  "jsRules": {},
+  "rules": {
+    "space-in-brackets": ["error", "always"],
+    "curly": ["error", "multi", "consistent"],
+    "no-any": true,
+    "ban-ts-ignore": true,
+    "semicolon": [true, "never"],
+    "trailing-comma": [false, "never"],
+    "no-irregular-whitespace": true
+  },
+  "rulesDirectory": []
+}

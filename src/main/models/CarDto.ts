@@ -51,7 +51,7 @@ export const carRequestDtoSchema: JSONSchemaType<CarRequestDto> = {
 
 export const convertCarReqDtoToCarDb = (
   carReq: CarRequestDto,
-  id: string
+  id: string,
 ): CarDb => {
   return {
     _id: id,

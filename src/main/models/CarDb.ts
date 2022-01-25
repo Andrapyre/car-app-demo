@@ -25,7 +25,7 @@ export const convertCarDbToCarDto = (car: CarDb): CarResponseDto => {
 }
 
 export const convertCarDbToCarMetadataDto = (
-  car: CarDb
+  car: CarDb,
 ): CarMetadataResponseDto => {
   const { _id, brandId } = car
   return {
