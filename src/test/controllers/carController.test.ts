@@ -65,12 +65,6 @@ describe("Car Controller", () => {
       const result = await httpClient.get(url)
       const cars = [carDb1, carDb2, carDb3]
       const carsMetadata = cars.map(convertCarDbToCarMetadataDto)
-      //   const carsMetadataSorted = carsMetadata.sort((a, b) => {
-      //     if (a.carId > b.carId) {
-      //       return -1
-      //     } else return 1
-      //   })
-      //   console.log(carsMetadataSorted)
 
       expect(result.status).toBe(200)
       expect(result.data).toEqual(carsMetadata)
