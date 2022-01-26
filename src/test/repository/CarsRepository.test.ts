@@ -66,6 +66,7 @@ describe("Cars Repository", () => {
       }
       const result = await carsRepository.updateCar(updatedCar)
       expect(result.modifiedCount).toBe(1)
+      await carsRepository.deleteCar(car._id)
     })
   })
 
