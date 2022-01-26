@@ -5,6 +5,7 @@ import { UpdateResult, DeleteResult } from "mongodb"
 import { validateTransmissionType } from "../models/TransmissionType"
 import { validatePaintColor } from "../models/PaintColor"
 import { validateBrandId } from "../models/BrandId"
+import { promiseErrorHandler } from "../utils/utils"
 
 export class CarsRepository {
   private readonly CarModel: Model<CarDb>
@@ -25,23 +26,37 @@ export class CarsRepository {
   }
 
   public async getCar(carId: string): Promise<CarDb | null> {
-    return await this.CarModel.findById(carId)
+    const promise = this.CarModel.findById(carId).exec()
+    return promiseErrorHandler(promise, `Could not get car for id: ${carId}`)
   }
 
   public async getCars(): Promise<CarDb[]> {
-    return await this.CarModel.find({})
+    const promise = this.CarModel.find({}).exec()
+    return promiseErrorHandler(promise, "Could not get all cars from db")
   }
 
   public async createCar(car: CarDb): Promise<CarDb> {
     const carModelInstance = new this.CarModel(car)
-    return await carModelInstance.save()
+    const promise = carModelInstance.save()
+    return promiseErrorHandler(
+      promise,
+      `Could not create car in db for car: ${JSON.stringify(car)}`
+    )
   }
 
   public async updateCar(car: CarDb): Promise<UpdateResult> {
-    return await this.CarModel.updateOne({ _id: car._id }, car)
+    const promise = this.CarModel.updateOne({ _id: car._id }, car).exec()
+    return promiseErrorHandler(
+      promise,
+      `Could not update car in db for ${JSON.stringify(car)}`
+    )
   }
 
   public async deleteCar(carId: string): Promise<DeleteResult> {
-    return await this.CarModel.deleteOne({ _id: carId })
+    const promise = this.CarModel.deleteOne({ _id: carId }).exec()
+    return promiseErrorHandler(
+      promise,
+      `Could not delete car in db for id: ${carId}`
+    )
   }
 }

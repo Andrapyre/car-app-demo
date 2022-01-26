@@ -1,5 +1,6 @@
 import { json, Express, Response } from "express"
 import { v4 } from "uuid"
+import { Logger } from "winston"
 import {
   CarDb,
   convertCarDbToCarDto,
@@ -9,7 +10,11 @@ import { convertCarReqDtoToCarDb } from "../models/CarDto"
 import { CarsRepository } from "../repository/CarsRepository"
 import { carIdParserMiddelware, parseCarBody } from "../utils/Parser"
 
-export const carController = (app: Express, carsRepository: CarsRepository) => {
+export const carController = (
+  app: Express,
+  carsRepository: CarsRepository,
+  logger: Logger
+) => {
   app.get("/cars", (req, res) => {
     handlePromiseAsServerError(res, carsRepository.getCars(), (dbCars) => {
       const cars = dbCars.map(convertCarDbToCarMetadataDto)
@@ -36,10 +41,14 @@ export const carController = (app: Express, carsRepository: CarsRepository) => {
     parseCarBody(req, res, async (body) => {
       const id = v4()
       const car: CarDb = convertCarReqDtoToCarDb(body, id)
-      handlePromiseAsServerError(res, carsRepository.createCar(car), (car) => {
-        const carDto = convertCarDbToCarDto(car)
-        res.status(201).json(carDto)
-      })
+      handlePromiseAsServerError(
+        res,
+        carsRepository.createCar(car),
+        (carResult) => {
+          const carDto = convertCarDbToCarDto(carResult)
+          res.status(201).json(carDto)
+        }
+      )
     })
   })
 
@@ -70,21 +79,22 @@ export const carController = (app: Express, carsRepository: CarsRepository) => {
       }
     )
   })
-}
 
-const handlePromiseAsServerError = <G>(
-  res: Response,
-  promiseAction: Promise<G>,
-  callback: (callbackData: G) => void
-) => {
-  return promiseAction.then(
-    (data) => {
-      callback(data)
-    },
-    () => {
-      res
-        .status(500)
-        .send("Our server encountered an error. Please try again later.")
-    }
-  )
+  const handlePromiseAsServerError = <G>(
+    res: Response,
+    promiseAction: Promise<G>,
+    callback: (callbackData: G) => void
+  ) => {
+    return promiseAction.then(
+      (data) => {
+        callback(data)
+      },
+      (err) => {
+        logger.error(err)
+        res
+          .status(500)
+          .send("Our server encountered an error. Please try again later.")
+      }
+    )
+  }
 }

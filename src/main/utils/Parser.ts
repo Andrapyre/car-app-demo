@@ -8,7 +8,7 @@ const ajv = new Ajv({ removeAdditional: true })
 export const carIdParserMiddelware = (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ): void => {
   const isIdValid = uuid.validate(req.params.id)
   if (!isIdValid) {
@@ -20,7 +20,7 @@ export const carIdParserMiddelware = (
 export const parseCarBody = (
   req: Request,
   res: Response,
-  callback: (parsedBody: CarRequestDto) => void
+  callback: (parsedBody: CarRequestDto) => void,
 ): void => {
   const { body } = req
   const validateCarRequestDto = ajv.compile(carRequestDtoSchema)
